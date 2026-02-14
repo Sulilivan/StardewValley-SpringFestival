@@ -20,7 +20,8 @@
             "FromFile": "assets/data/winter28_zh.json",
             "When": {
                 "Language": "zh"
-            }
+            },
+            "Priority": "High"
         },
 
         {
