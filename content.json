@@ -11,8 +11,26 @@
 
         {
             "Action": "Load",
+            "Target": "Maps/SpringFestivalTown",
+            "FromFile": "assets/maps/Town-SVE-Christmas2.tmx",
+            "When": {
+                "HasMod": "FlashShifter.StardewValleyExpanded"
+            }
+        },
+        {
+            "Action": "Load",
+            "Target": "Maps/SpringFestivalTown",
+            "FromFile": "assets/maps/Town.tmx",
+            "When": {
+                "HasMod |contains=FlashShifter.StardewValleyExpanded": "false"
+            }
+        },
+
+        {
+            "Action": "Load",
             "Target": "Data/Festivals/winter28",
-            "FromFile": "assets/data/winter28.json"
+            "FromFile": "assets/data/winter28.json",
+            "Priority": "High"
         },
         {
             "Action": "Load",
@@ -49,7 +67,7 @@
                 "SpringFestivalMod.ChineseSpringFestival_SendMail": {
                     "Id": "SpringFestivalMod.ChineseSpringFestival_SendMail",
                     "Trigger": "DayStarted",
-                    "Condition": "DAY_OF_MONTH 25, SEASON Winter",
+                    "Condition": "SEASON winter, DAY_OF_MONTH 25",
                     "Actions": [
                         "AddMail Current spring_festival_notice"
                     ],
