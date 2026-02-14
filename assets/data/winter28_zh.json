@@ -3,7 +3,7 @@
     "conditions": "Town/900 2400",
     "startedMessage": "欢迎来到春节庆典！和乡亲们聊聊天，享受这美好的节日吧！",
 
-    "set-up": "event2/-1000 -1000/farmer 29 66 2/changeToTemporaryMap SpringFestivalTown/viewport -1000 -1000/loadActors Set-Up/viewport 29 66/playerControl spring_festival",
+    "set-up": "event2/-1000 -1000/farmer 29 66 2/changeToTemporaryMap Town/viewport -1000 -1000/loadActors Set-Up/viewport 29 66/playerControl spring_festival",
     "Set-Up_additionalCharacters": "Lewis 33 66 2/Pierre 37 63 2/Caroline 38 63 0/Abigail 39 64 2/Alex 26 64 0/Haley 27 64 2/Sam 30 71 2/Sebastian 25 62 2/Penny 35 69 0/Maru 40 66 0/Harvey 41 66 2/Shane 43 71 2/Emily 34 63 0/Jodi 28 69 0/Evelyn 31 73 0/George 30 73 2/Clint 43 65 2/Demetrius 39 69 0/Robin 27 67 2/Willy 44 70 0/Pam 43 72 2/Linus 23 61 2/Elliott 37 71 2/Leah 36 71 0/Jas 32 73 2/Vincent 33 73 0/Marnie 31 72 2/Gus 38 73 0",
 
     "mainEvent": "pause 300/speak Lewis \"欢迎大家来参加春节庆典！在这辞旧迎新的时刻，让我们共同迎接新年的到来！\"/pause 500/emote Lewis 56/pause 300/speak Lewis \"冬天即将过去，崭新的一年就在眼前。让我们满怀希望，共赴新程！\"/pause 300/jump Lewis/pause 500/speak Lewis \"现在……让我们一起点燃烟花吧！\"/pause 500/playSound drumkit6/pause 300/playSound drumkit6/pause 200/playSound drumkit6/pause 600/playSound explosion/screenFlash 0.8/pause 400/playSound explosion/screenFlash 0.8/pause 300/playSound explosion/screenFlash 0.8/pause 500/playSound explosion/screenFlash 0.8/pause 200/playSound explosion/screenFlash 0.8/pause 400/playSound explosion/screenFlash 0.8/pause 300/speak Lewis \"新年快乐！祝大家在新的一年里万事如意、幸福安康！恭喜发财！\"/pause 300/emote Lewis 56/emote farmer 56/pause 500/end",

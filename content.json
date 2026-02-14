@@ -10,20 +10,26 @@
         },
 
         {
-            "Action": "Load",
-            "Target": "Maps/SpringFestivalTown",
+            "Action": "EditMap",
+            "Target": "Maps/Town",
             "FromFile": "assets/maps/Town-SVE-Christmas2.tmx",
             "When": {
+                "Season": "winter",
+                "Day": "28",
                 "HasMod": "FlashShifter.StardewValleyExpanded"
-            }
+            },
+                "Priority": "Early"
         },
         {
-            "Action": "Load",
-            "Target": "Maps/SpringFestivalTown",
+            "Action": "EditMap",
+            "Target": "Maps/Town",
             "FromFile": "assets/maps/Town.tmx",
             "When": {
+                "Season": "winter",
+                "Day": "28",
                 "HasMod |contains=FlashShifter.StardewValleyExpanded": "false"
-            }
+            },
+                "Priority": "Early"
         },
 
         {
