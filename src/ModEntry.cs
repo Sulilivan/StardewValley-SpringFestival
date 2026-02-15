@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
@@ -209,7 +210,75 @@ internal sealed class ModEntry : Mod
             return;
 
         this.FireworksTriggered = true;
+        this.ArrangeNPCsForFireworks();
         this.StartFireworksShow();
+    }
+
+    private void ArrangeNPCsForFireworks()
+    {
+        var location = Game1.currentLocation;
+        if (location == null)
+            return;
+
+        // In festivals, NPCs are managed as event actors, not location.characters
+        var currentEvent = Game1.CurrentEvent;
+        if (currentEvent == null)
+        {
+            this.Monitor.Log("No current event found, cannot arrange NPCs", LogLevel.Warn);
+            return;
+        }
+
+        // Get all actors from the festival event
+        var actors = currentEvent.actors;
+        if (actors == null || actors.Count == 0)
+        {
+            this.Monitor.Log("No actors found in current event", LogLevel.Warn);
+            return;
+        }
+
+        this.Monitor.Log($"Found {actors.Count} actors in festival", LogLevel.Debug);
+        
+        // Two rows: row1 at y=62, row2 at y=66, x from 25 to 36
+        int[] row1Positions = { 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36 };
+        int[] row2Positions = { 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36 };
+        
+        int row1Index = 0;
+        int row2Index = 0;
+        
+        foreach (var npc in actors)
+        {
+            if (npc == null)
+                continue;
+                
+            Vector2 targetPosition;
+            int facingDirection = 0; // Face up (toward the sky for fireworks)
+            
+            // Alternate between two rows
+            if (row1Index <= row2Index && row1Index < row1Positions.Length)
+            {
+                targetPosition = new Vector2(row1Positions[row1Index] * 64, 62 * 64);
+                row1Index++;
+            }
+            else if (row2Index < row2Positions.Length)
+            {
+                targetPosition = new Vector2(row2Positions[row2Index] * 64, 66 * 64);
+                row2Index++;
+            }
+            else
+            {
+                continue; // No more positions available
+            }
+            
+            // Move NPC to position
+            npc.Position = targetPosition;
+            npc.FacingDirection = facingDirection;
+            npc.Halt();
+            npc.faceDirection(facingDirection);
+            
+            this.Monitor.Log($"Moved {npc.Name} to ({targetPosition.X/64}, {targetPosition.Y/64})", LogLevel.Debug);
+        }
+        
+        this.Monitor.Log($"Arranged {row1Index + row2Index} NPCs for fireworks viewing", LogLevel.Info);
     }
 
     private void StartFireworksShow()
@@ -240,15 +309,15 @@ internal sealed class ModEntry : Mod
         if (location == null)
             return;
 
-        // Launch fireworks at intervals
-        if (this.FireworksTimer % 30 == 0 && this.FireworksPhase < 20) // Every 0.5 seconds, 20 fireworks total
+        // Launch fireworks at intervals - every 60 ticks (1 second), 20 fireworks total
+        if (this.FireworksTimer % 60 == 0 && this.FireworksPhase < 20)
         {
             this.LaunchFirework(location);
             this.FireworksPhase++;
         }
 
-        // End the show after all fireworks
-        if (this.FireworksPhase >= 20 && this.FireworksTimer > 700) // About 12 seconds total
+        // End the show after all fireworks (20 seconds + buffer)
+        if (this.FireworksPhase >= 20 && this.FireworksTimer > 1300)
         {
             this.FireworksShowActive = false;
             
@@ -257,6 +326,16 @@ internal sealed class ModEntry : Mod
                 ? "新年快乐！祝大家在新的一年里万事如意、幸福安康！恭喜发财！"
                 : "Happy New Year! May the coming year bring prosperity and happiness to us all!";
             Game1.drawObjectDialogue(finalMsg);
+            
+            // End the festival after fireworks
+            Game1.delayedActions.Add(new DelayedAction(2000, () =>
+            {
+                if (Game1.CurrentEvent != null && Game1.CurrentEvent.isFestival)
+                {
+                    Game1.CurrentEvent.forceEndFestival(Game1.player);
+                    this.Monitor.Log("Festival ended after fireworks!", LogLevel.Info);
+                }
+            }));
             
             this.Monitor.Log("Fireworks show ended!", LogLevel.Info);
         }
@@ -268,7 +347,7 @@ internal sealed class ModEntry : Mod
         {
             // Random position in the sky above the festival area
             float baseX = (25 + this.FireworksRandom.Next(25)) * 64f; // X: tiles 25-50
-            float baseY = (45 + this.FireworksRandom.Next(15)) * 64f; // Y: tiles 45-60 (in the sky)
+            float baseY = (55 + this.FireworksRandom.Next(10)) * 64f; // Y: tiles 55-65 (lower, more visible)
             
             // Play firework sound
             Game1.playSound("firework");

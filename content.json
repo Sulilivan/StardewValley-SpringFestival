@@ -2,13 +2,274 @@
     "Format": "2.3.0",
     "Changes": [
         {
+            "Action": "Load",
+            "Target": "Mods/SpringFestival/Objects/Tanghulu",
+            "FromFile": "assets/objects/tanghulu.png"
+        },
+        {
+            "Action": "Load",
+            "Target": "Mods/SpringFestival/Objects/Dumpling",
+            "FromFile": "assets/objects/dumpling.png"
+        },
+        {
+            "Action": "Load",
+            "Target": "Mods/SpringFestival/Objects/RedEnvelope",
+            "FromFile": "assets/objects/red_envelope.png"
+        },
+        {
+            "Action": "Load",
+            "Target": "Mods/SpringFestival/Furniture/ChineseKnot",
+            "FromFile": "assets/furniture/chinese_knot.png"
+        },
+        {
+            "Action": "Load",
+            "Target": "Mods/SpringFestival/Furniture/FuCharacter",
+            "FromFile": "assets/furniture/fu_character.png"
+        },
+        {
+            "Action": "Load",
+            "Target": "Mods/SpringFestival/Furniture/Orchid",
+            "FromFile": "assets/furniture/orchid.png"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Objects",
+            "Entries": {
+                "{{ModId}}_Tanghulu": {
+                    "Name": "Tanghulu",
+                    "DisplayName": "Tanghulu",
+                    "Description": "A traditional Chinese candied fruit skewer. Sweet and festive!",
+                    "Type": "Cooking",
+                    "Category": -7,
+                    "Price": 150,
+                    "Texture": "Mods/SpringFestival/Objects/Tanghulu",
+                    "SpriteIndex": 0,
+                    "Edibility": 45,
+                    "IsDrink": false,
+                    "Buffs": [
+                        {
+                            "Id": "{{ModId}}_Tanghulu_Buff",
+                            "Duration": 180,
+                            "BuffId": "{{ModId}}_Tanghulu_Buff",
+                            "CustomAttributes": {
+                                "Speed": 1
+                            }
+                        }
+                    ],
+                    "ContextTags": [ "color_red", "season_winter", "festival_item" ]
+                },
+                "{{ModId}}_Dumpling": {
+                    "Name": "Dumpling",
+                    "DisplayName": "Dumpling",
+                    "Description": "A delicious homemade dumpling. A symbol of wealth and good fortune.",
+                    "Type": "Cooking",
+                    "Category": -7,
+                    "Price": 200,
+                    "Texture": "Mods/SpringFestival/Objects/Dumpling",
+                    "SpriteIndex": 0,
+                    "Edibility": 60,
+                    "IsDrink": false,
+                    "Buffs": [
+                        {
+                            "Id": "{{ModId}}_Dumpling_Buff",
+                            "Duration": 300,
+                            "BuffId": "{{ModId}}_Dumpling_Buff",
+                            "CustomAttributes": {
+                                "Luck": 1
+                            }
+                        }
+                    ],
+                    "ContextTags": [ "color_white", "season_winter", "festival_item" ]
+                },
+                "{{ModId}}_RedEnvelope": {
+                    "Name": "RedEnvelope",
+                    "DisplayName": "Red Envelope",
+                    "Description": "A lucky red envelope filled with surprises! Open it to receive a gift.",
+                    "Type": "Basic",
+                    "Category": 0,
+                    "Price": 888,
+                    "Texture": "Mods/SpringFestival/Objects/RedEnvelope",
+                    "SpriteIndex": 0,
+                    "Edibility": -300,
+                    "IsDrink": false,
+                    "ContextTags": [ "color_red", "season_winter", "festival_item", "gift_item" ]
+                }
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Objects",
+            "Entries": {
+                "{{ModId}}_Tanghulu": {
+                    "Name": "Tanghulu",
+                    "DisplayName": "冰糖葫芦",
+                    "Description": "传统的中国糖葫芦。甜蜜又喜庆！",
+                    "Type": "Cooking",
+                    "Category": -7,
+                    "Price": 150,
+                    "Texture": "Mods/SpringFestival/Objects/Tanghulu",
+                    "SpriteIndex": 0,
+                    "Edibility": 45,
+                    "IsDrink": false,
+                    "Buffs": [
+                        {
+                            "Id": "{{ModId}}_Tanghulu_Buff",
+                            "Duration": 180,
+                            "BuffId": "{{ModId}}_Tanghulu_Buff",
+                            "CustomAttributes": {
+                                "Speed": 1
+                            }
+                        }
+                    ],
+                    "ContextTags": [ "color_red", "season_winter", "festival_item" ]
+                },
+                "{{ModId}}_Dumpling": {
+                    "Name": "Dumpling",
+                    "DisplayName": "饺子",
+                    "Description": "美味的手工饺子。象征着财富和好运。",
+                    "Type": "Cooking",
+                    "Category": -7,
+                    "Price": 200,
+                    "Texture": "Mods/SpringFestival/Objects/Dumpling",
+                    "SpriteIndex": 0,
+                    "Edibility": 60,
+                    "IsDrink": false,
+                    "Buffs": [
+                        {
+                            "Id": "{{ModId}}_Dumpling_Buff",
+                            "Duration": 300,
+                            "BuffId": "{{ModId}}_Dumpling_Buff",
+                            "CustomAttributes": {
+                                "Luck": 1
+                            }
+                        }
+                    ],
+                    "ContextTags": [ "color_white", "season_winter", "festival_item" ]
+                },
+                "{{ModId}}_RedEnvelope": {
+                    "Name": "RedEnvelope",
+                    "DisplayName": "红包",
+                    "Description": "一个装满惊喜的红包！打开后会获得礼物。",
+                    "Type": "Basic",
+                    "Category": 0,
+                    "Price": 888,
+                    "Texture": "Mods/SpringFestival/Objects/RedEnvelope",
+                    "SpriteIndex": 0,
+                    "Edibility": -300,
+                    "IsDrink": false,
+                    "ContextTags": [ "color_red", "season_winter", "festival_item", "gift_item" ]
+                }
+            },
+            "When": {
+                "Language": "zh"
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Furniture",
+            "Entries": {
+                "{{ModId}}_ChineseKnot": {
+                    "Name": "Chinese Knot",
+                    "DisplayName": "Chinese Knot",
+                    "Description": "A beautiful traditional Chinese knot decoration. Brings good luck!",
+                    "Type": "painting",
+                    "Texture": "Mods/SpringFestival/Furniture/ChineseKnot",
+                    "SpriteIndex": 0,
+                    "TilesheetSize": { "Width": 1, "Height": 2 },
+                    "BoundingBoxSize": { "Width": 1, "Height": 2 },
+                    "Price": 500,
+                    "Rotations": 1,
+                    "PlacementRestriction": 2,
+                    "ContextTags": [ "color_red", "festival_item" ]
+                },
+                "{{ModId}}_FuCharacter": {
+                    "Name": "Fu Character",
+                    "DisplayName": "Fu Character",
+                    "Description": "The Chinese character for 'fortune'. Often hung upside down to signify 'fortune arrives'.",
+                    "Type": "painting",
+                    "Texture": "Mods/SpringFestival/Furniture/FuCharacter",
+                    "SpriteIndex": 0,
+                    "TilesheetSize": { "Width": 1, "Height": 1 },
+                    "BoundingBoxSize": { "Width": 1, "Height": 1 },
+                    "Price": 500,
+                    "Rotations": 1,
+                    "PlacementRestriction": 2,
+                    "ContextTags": [ "color_red", "festival_item" ]
+                },
+                "{{ModId}}_Orchid": {
+                    "Name": "Orchid",
+                    "DisplayName": "Phalaenopsis Orchid",
+                    "Description": "A beautiful butterfly orchid. Symbolizes elegance and prosperity.",
+                    "Type": "table",
+                    "Texture": "Mods/SpringFestival/Furniture/Orchid",
+                    "SpriteIndex": 0,
+                    "TilesheetSize": { "Width": 1, "Height": 2 },
+                    "BoundingBoxSize": { "Width": 1, "Height": 1 },
+                    "Price": 800,
+                    "Rotations": 1,
+                    "PlacementRestriction": 0,
+                    "ContextTags": [ "color_purple", "flower", "festival_item" ]
+                }
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Furniture",
+            "Entries": {
+                "{{ModId}}_ChineseKnot": {
+                    "Name": "Chinese Knot",
+                    "DisplayName": "中国结",
+                    "Description": "美丽的传统中国结装饰。带来好运！",
+                    "Type": "painting",
+                    "Texture": "Mods/SpringFestival/Furniture/ChineseKnot",
+                    "SpriteIndex": 0,
+                    "TilesheetSize": { "Width": 1, "Height": 2 },
+                    "BoundingBoxSize": { "Width": 1, "Height": 2 },
+                    "Price": 500,
+                    "Rotations": 1,
+                    "PlacementRestriction": 2,
+                    "ContextTags": [ "color_red", "festival_item" ]
+                },
+                "{{ModId}}_FuCharacter": {
+                    "Name": "Fu Character",
+                    "DisplayName": "福字",
+                    "Description": "中国的『福』字。常常倒挂寓意『福到了』。",
+                    "Type": "painting",
+                    "Texture": "Mods/SpringFestival/Furniture/FuCharacter",
+                    "SpriteIndex": 0,
+                    "TilesheetSize": { "Width": 1, "Height": 1 },
+                    "BoundingBoxSize": { "Width": 1, "Height": 1 },
+                    "Price": 500,
+                    "Rotations": 1,
+                    "PlacementRestriction": 2,
+                    "ContextTags": [ "color_red", "festival_item" ]
+                },
+                "{{ModId}}_Orchid": {
+                    "Name": "Orchid",
+                    "DisplayName": "蝴蝶兰",
+                    "Description": "美丽的蝴蝶兰盆栽。象征着优雅与富贵。",
+                    "Type": "table",
+                    "Texture": "Mods/SpringFestival/Furniture/Orchid",
+                    "SpriteIndex": 0,
+                    "TilesheetSize": { "Width": 1, "Height": 2 },
+                    "BoundingBoxSize": { "Width": 1, "Height": 1 },
+                    "Price": 800,
+                    "Rotations": 1,
+                    "PlacementRestriction": 0,
+                    "ContextTags": [ "color_purple", "flower", "festival_item" ]
+                }
+            },
+            "When": {
+                "Language": "zh"
+            }
+        },
+        {
             "Action": "EditData",
             "Target": "Data/Festivals/FestivalDates",
             "Entries": {
                 "winter28": "winter 28"
             }
         },
-
         {
             "Action": "EditMap",
             "Target": "Maps/Town",
@@ -18,7 +279,7 @@
                 "Day": "28",
                 "HasMod": "FlashShifter.StardewValleyExpanded"
             },
-                "Priority": "Early"
+            "Priority": "Early"
         },
         {
             "Action": "EditMap",
@@ -29,9 +290,8 @@
                 "Day": "28",
                 "HasMod |contains=FlashShifter.StardewValleyExpanded": "false"
             },
-                "Priority": "Early"
+            "Priority": "Early"
         },
-
         {
             "Action": "Load",
             "Target": "Data/Festivals/winter28",
@@ -47,7 +307,6 @@
             },
             "Priority": "High"
         },
-
         {
             "Action": "EditData",
             "Target": "Data/mail",
@@ -65,7 +324,6 @@
                 "Language": "zh"
             }
         },
-
         {
             "Action": "EditData",
             "Target": "Data/TriggerActions",
@@ -81,7 +339,6 @@
                 }
             }
         },
-
         {
             "Action": "EditData",
             "Target": "Data/Shops",
@@ -102,42 +359,42 @@
                     "SalableItemTags": null,
                     "Items": [
                         {
-                            "Id": "SpringFestival_TanghuluSkewer",
-                            "ItemId": "(O)459",
+                            "Id": "SpringFestival_Tanghulu",
+                            "ItemId": "(O){{ModId}}_Tanghulu",
                             "Price": 150,
                             "AvailableStock": -1
                         },
                         {
-                            "Id": "SpringFestival_Dumplings",
-                            "ItemId": "(O)220",
+                            "Id": "SpringFestival_Dumpling",
+                            "ItemId": "(O){{ModId}}_Dumpling",
                             "Price": 200,
                             "AvailableStock": -1
                         },
                         {
-                            "Id": "SpringFestival_LuckyRedEnvelope",
-                            "ItemId": "(O)74",
+                            "Id": "SpringFestival_RedEnvelope",
+                            "ItemId": "(O){{ModId}}_RedEnvelope",
                             "Price": 888,
                             "AvailableStock": 3,
                             "AvailableStockLimit": "Player"
                         },
                         {
-                            "Id": "SpringFestival_FestiveLantern",
-                            "ItemId": "(O)161",
+                            "Id": "SpringFestival_ChineseKnot",
+                            "ItemId": "(F){{ModId}}_ChineseKnot",
                             "Price": 500,
-                            "AvailableStock": 5
+                            "AvailableStock": 2
                         },
                         {
-                            "Id": "SpringFestival_LuckyCharm",
-                            "ItemId": "(O)446",
-                            "Price": 666,
+                            "Id": "SpringFestival_FuCharacter",
+                            "ItemId": "(F){{ModId}}_FuCharacter",
+                            "Price": 500,
+                            "AvailableStock": 2
+                        },
+                        {
+                            "Id": "SpringFestival_Orchid",
+                            "ItemId": "(F){{ModId}}_Orchid",
+                            "Price": 800,
                             "AvailableStock": 1,
                             "AvailableStockLimit": "Player"
-                        },
-                        {
-                            "Id": "SpringFestival_Firework",
-                            "ItemId": "(O)287",
-                            "Price": 300,
-                            "AvailableStock": 10
                         }
                     ]
                 }
@@ -163,42 +420,42 @@
                     "SalableItemTags": null,
                     "Items": [
                         {
-                            "Id": "SpringFestival_TanghuluSkewer",
-                            "ItemId": "(O)459",
+                            "Id": "SpringFestival_Tanghulu",
+                            "ItemId": "(O){{ModId}}_Tanghulu",
                             "Price": 150,
                             "AvailableStock": -1
                         },
                         {
-                            "Id": "SpringFestival_Dumplings",
-                            "ItemId": "(O)220",
+                            "Id": "SpringFestival_Dumpling",
+                            "ItemId": "(O){{ModId}}_Dumpling",
                             "Price": 200,
                             "AvailableStock": -1
                         },
                         {
-                            "Id": "SpringFestival_LuckyRedEnvelope",
-                            "ItemId": "(O)74",
+                            "Id": "SpringFestival_RedEnvelope",
+                            "ItemId": "(O){{ModId}}_RedEnvelope",
                             "Price": 888,
                             "AvailableStock": 3,
                             "AvailableStockLimit": "Player"
                         },
                         {
-                            "Id": "SpringFestival_FestiveLantern",
-                            "ItemId": "(O)161",
+                            "Id": "SpringFestival_ChineseKnot",
+                            "ItemId": "(F){{ModId}}_ChineseKnot",
                             "Price": 500,
-                            "AvailableStock": 5
+                            "AvailableStock": 2
                         },
                         {
-                            "Id": "SpringFestival_LuckyCharm",
-                            "ItemId": "(O)446",
-                            "Price": 666,
+                            "Id": "SpringFestival_FuCharacter",
+                            "ItemId": "(F){{ModId}}_FuCharacter",
+                            "Price": 500,
+                            "AvailableStock": 2
+                        },
+                        {
+                            "Id": "SpringFestival_Orchid",
+                            "ItemId": "(F){{ModId}}_Orchid",
+                            "Price": 800,
                             "AvailableStock": 1,
                             "AvailableStockLimit": "Player"
-                        },
-                        {
-                            "Id": "SpringFestival_Firework",
-                            "ItemId": "(O)287",
-                            "Price": 300,
-                            "AvailableStock": 10
                         }
                     ]
                 }
