@@ -18,17 +18,17 @@
         },
         {
             "Action": "Load",
-            "Target": "Mods/SpringFestival/Furniture/ChineseKnot",
+            "Target": "SpringFestival_ChineseKnot",
             "FromFile": "assets/furniture/chinese_knot.png"
         },
         {
             "Action": "Load",
-            "Target": "Mods/SpringFestival/Furniture/FuCharacter",
+            "Target": "SpringFestival_FuCharacter",
             "FromFile": "assets/furniture/fu_character.png"
         },
         {
             "Action": "Load",
-            "Target": "Mods/SpringFestival/Furniture/Orchid",
+            "Target": "SpringFestival_Orchid",
             "FromFile": "assets/furniture/orchid.png"
         },
         {
@@ -168,96 +168,18 @@
             "Action": "EditData",
             "Target": "Data/Furniture",
             "Entries": {
-                "{{ModId}}_ChineseKnot": {
-                    "Name": "Chinese Knot",
-                    "DisplayName": "Chinese Knot",
-                    "Description": "A beautiful traditional Chinese knot decoration. Brings good luck!",
-                    "Type": "painting",
-                    "Texture": "Mods/SpringFestival/Furniture/ChineseKnot",
-                    "SpriteIndex": 0,
-                    "TilesheetSize": { "Width": 1, "Height": 2 },
-                    "BoundingBoxSize": { "Width": 1, "Height": 2 },
-                    "Price": 500,
-                    "Rotations": 1,
-                    "PlacementRestriction": 2,
-                    "ContextTags": [ "color_red", "festival_item" ]
-                },
-                "{{ModId}}_FuCharacter": {
-                    "Name": "Fu Character",
-                    "DisplayName": "Fu Character",
-                    "Description": "The Chinese character for 'fortune'. Often hung upside down to signify 'fortune arrives'.",
-                    "Type": "painting",
-                    "Texture": "Mods/SpringFestival/Furniture/FuCharacter",
-                    "SpriteIndex": 0,
-                    "TilesheetSize": { "Width": 1, "Height": 1 },
-                    "BoundingBoxSize": { "Width": 1, "Height": 1 },
-                    "Price": 500,
-                    "Rotations": 1,
-                    "PlacementRestriction": 2,
-                    "ContextTags": [ "color_red", "festival_item" ]
-                },
-                "{{ModId}}_Orchid": {
-                    "Name": "Orchid",
-                    "DisplayName": "Phalaenopsis Orchid",
-                    "Description": "A beautiful butterfly orchid. Symbolizes elegance and prosperity.",
-                    "Type": "table",
-                    "Texture": "Mods/SpringFestival/Furniture/Orchid",
-                    "SpriteIndex": 0,
-                    "TilesheetSize": { "Width": 1, "Height": 2 },
-                    "BoundingBoxSize": { "Width": 1, "Height": 1 },
-                    "Price": 800,
-                    "Rotations": 1,
-                    "PlacementRestriction": 0,
-                    "ContextTags": [ "color_purple", "flower", "festival_item" ]
-                }
+                "{{ModId}}_ChineseKnot": "Chinese Knot/painting/1 2/1 2/1/500/2/Chinese Knot/0/SpringFestival_ChineseKnot/false/color_red festival_item",
+                "{{ModId}}_FuCharacter": "Fu Character/painting/1 1/1 1/1/500/2/Fu Character/0/SpringFestival_FuCharacter/false/color_red festival_item",
+                "{{ModId}}_Orchid": "Orchid/table/1 2/1 1/1/800/0/Phalaenopsis Orchid/0/SpringFestival_Orchid/false/color_purple flower festival_item"
             }
         },
         {
             "Action": "EditData",
             "Target": "Data/Furniture",
             "Entries": {
-                "{{ModId}}_ChineseKnot": {
-                    "Name": "Chinese Knot",
-                    "DisplayName": "中国结",
-                    "Description": "美丽的传统中国结装饰。带来好运！",
-                    "Type": "painting",
-                    "Texture": "Mods/SpringFestival/Furniture/ChineseKnot",
-                    "SpriteIndex": 0,
-                    "TilesheetSize": { "Width": 1, "Height": 2 },
-                    "BoundingBoxSize": { "Width": 1, "Height": 2 },
-                    "Price": 500,
-                    "Rotations": 1,
-                    "PlacementRestriction": 2,
-                    "ContextTags": [ "color_red", "festival_item" ]
-                },
-                "{{ModId}}_FuCharacter": {
-                    "Name": "Fu Character",
-                    "DisplayName": "福字",
-                    "Description": "中国的『福』字。常常倒挂寓意『福到了』。",
-                    "Type": "painting",
-                    "Texture": "Mods/SpringFestival/Furniture/FuCharacter",
-                    "SpriteIndex": 0,
-                    "TilesheetSize": { "Width": 1, "Height": 1 },
-                    "BoundingBoxSize": { "Width": 1, "Height": 1 },
-                    "Price": 500,
-                    "Rotations": 1,
-                    "PlacementRestriction": 2,
-                    "ContextTags": [ "color_red", "festival_item" ]
-                },
-                "{{ModId}}_Orchid": {
-                    "Name": "Orchid",
-                    "DisplayName": "蝴蝶兰",
-                    "Description": "美丽的蝴蝶兰盆栽。象征着优雅与富贵。",
-                    "Type": "table",
-                    "Texture": "Mods/SpringFestival/Furniture/Orchid",
-                    "SpriteIndex": 0,
-                    "TilesheetSize": { "Width": 1, "Height": 2 },
-                    "BoundingBoxSize": { "Width": 1, "Height": 1 },
-                    "Price": 800,
-                    "Rotations": 1,
-                    "PlacementRestriction": 0,
-                    "ContextTags": [ "color_purple", "flower", "festival_item" ]
-                }
+                "{{ModId}}_ChineseKnot": "中国结/painting/1 2/1 2/1/500/2/中国结/0/SpringFestival_ChineseKnot/false/color_red festival_item",
+                "{{ModId}}_FuCharacter": "福字/painting/1 1/1 1/1/500/2/福字/0/SpringFestival_FuCharacter/false/color_red festival_item",
+                "{{ModId}}_Orchid": "蝴蝶兰/table/1 2/1 1/1/800/0/蝴蝶兰/0/SpringFestival_Orchid/false/color_purple flower festival_item"
             },
             "When": {
                 "Language": "zh"

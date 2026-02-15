@@ -7,6 +7,7 @@ using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Objects;
+using StardewValley.Pathfinding;
 
 namespace SpringFestivalHelper;
 
@@ -24,6 +25,12 @@ internal sealed class ModEntry : Mod
     private Point LastPlayerTile;
     private bool HasTalkedToLewis;
     private bool FireworksTriggered;
+    private bool IsDialogueActive; // Prevent repeated dialogue triggers
+    
+    // NPC movement state
+    private bool NPCsMoving;
+    private List<NPC> MovingNPCs = new();
+    private int NPCMoveCheckTimer;
     
     // Fireworks state
     private bool FireworksShowActive;
@@ -67,6 +74,10 @@ internal sealed class ModEntry : Mod
         this.FireworksShowActive = false;
         this.FireworksTimer = 0;
         this.FireworksPhase = 0;
+        this.IsDialogueActive = false;
+        this.NPCsMoving = false;
+        this.MovingNPCs.Clear();
+        this.NPCMoveCheckTimer = 0;
         this.Monitor.Log("Spring Festival states reset.", LogLevel.Debug);
     }
 
@@ -74,6 +85,10 @@ internal sealed class ModEntry : Mod
     {
         // Only handle in festivals
         if (!Context.IsWorldReady || !Game1.isFestival())
+            return;
+
+        // Don't handle if dialogue is already active
+        if (this.IsDialogueActive || Game1.activeClickableMenu != null || Game1.dialogueUp)
             return;
 
         // Only handle action buttons
@@ -161,12 +176,15 @@ internal sealed class ModEntry : Mod
 
     private void HandleLewisInteraction()
     {
+        this.IsDialogueActive = true;
+        
         // Already triggered fireworks
         if (this.FireworksTriggered)
         {
             string msg = Game1.content.GetCurrentLanguage() == LocalizedContentManager.LanguageCode.zh
                 ? "今晚的烟花表演真是太精彩了！新年快乐！"
                 : "What a spectacular fireworks show! Happy New Year!";
+            Game1.afterDialogues = () => { this.IsDialogueActive = false; };
             Game1.drawObjectDialogue(msg);
             return;
         }
@@ -178,6 +196,7 @@ internal sealed class ModEntry : Mod
             string msg = Game1.content.GetCurrentLanguage() == LocalizedContentManager.LanguageCode.zh
                 ? "欢迎来到除夕庆典！新年快乐！^先去到处逛逛吧，和乡亲们聊聊天。^你还可以去彩色帐篷里换一身新衣服！^准备好之后再来找我，我们一起点燃烟花！"
                 : "Welcome to the Spring Festival! Happy New Year!^Feel free to explore and chat with everyone.^You can visit the colorful tent to change outfits!^Come back when you're ready to light the fireworks!";
+            Game1.afterDialogues = () => { this.IsDialogueActive = false; };
             Game1.drawObjectDialogue(msg);
             this.Monitor.Log("First Lewis interaction - showed welcome message", LogLevel.Debug);
             return;
@@ -204,6 +223,7 @@ internal sealed class ModEntry : Mod
 
     private void OnFireworksChoice(Farmer who, string answer)
     {
+        this.IsDialogueActive = false;
         this.Monitor.Log($"Fireworks choice: {answer}", LogLevel.Debug);
         
         if (answer != "yes")
@@ -211,7 +231,6 @@ internal sealed class ModEntry : Mod
 
         this.FireworksTriggered = true;
         this.ArrangeNPCsForFireworks();
-        this.StartFireworksShow();
     }
 
     private void ArrangeNPCsForFireworks()
@@ -245,23 +264,24 @@ internal sealed class ModEntry : Mod
         int row1Index = 0;
         int row2Index = 0;
         
+        this.MovingNPCs.Clear();
+        
         foreach (var npc in actors)
         {
             if (npc == null)
                 continue;
                 
-            Vector2 targetPosition;
-            int facingDirection = 0; // Face up (toward the sky for fireworks)
+            Point targetTile;
             
             // Alternate between two rows
             if (row1Index <= row2Index && row1Index < row1Positions.Length)
             {
-                targetPosition = new Vector2(row1Positions[row1Index] * 64, 62 * 64);
+                targetTile = new Point(row1Positions[row1Index], 62);
                 row1Index++;
             }
             else if (row2Index < row2Positions.Length)
             {
-                targetPosition = new Vector2(row2Positions[row2Index] * 64, 66 * 64);
+                targetTile = new Point(row2Positions[row2Index], 66);
                 row2Index++;
             }
             else
@@ -269,16 +289,94 @@ internal sealed class ModEntry : Mod
                 continue; // No more positions available
             }
             
-            // Move NPC to position
-            npc.Position = targetPosition;
-            npc.FacingDirection = facingDirection;
-            npc.Halt();
-            npc.faceDirection(facingDirection);
-            
-            this.Monitor.Log($"Moved {npc.Name} to ({targetPosition.X/64}, {targetPosition.Y/64})", LogLevel.Debug);
+            // Use PathFindController for native pathfinding
+            try
+            {
+                npc.controller = new PathFindController(
+                    npc, 
+                    location, 
+                    targetTile, 
+                    0, // Face up when arrived
+                    (character, loc) => 
+                    {
+                        // Callback when NPC arrives
+                        character.Halt();
+                        character.faceDirection(0); // Face up
+                    }
+                );
+                
+                this.MovingNPCs.Add(npc);
+                this.Monitor.Log($"Set pathfinding for {npc.Name} to ({targetTile.X}, {targetTile.Y})", LogLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                // If pathfinding fails, teleport directly
+                npc.Position = new Vector2(targetTile.X * 64, targetTile.Y * 64);
+                npc.FacingDirection = 0;
+                this.Monitor.Log($"Pathfinding failed for {npc.Name}, teleported: {ex.Message}", LogLevel.Debug);
+            }
         }
         
-        this.Monitor.Log($"Arranged {row1Index + row2Index} NPCs for fireworks viewing", LogLevel.Info);
+        // Start the movement process
+        this.NPCsMoving = true;
+        this.NPCMoveCheckTimer = 0;
+        
+        this.Monitor.Log($"Started NPC pathfinding to fireworks viewing positions", LogLevel.Info);
+    }
+    
+    private void UpdateNPCMovement()
+    {
+        if (!this.NPCsMoving || this.MovingNPCs.Count == 0)
+            return;
+            
+        this.NPCMoveCheckTimer++;
+        
+        // Check every 30 ticks (0.5 seconds) to reduce overhead
+        if (this.NPCMoveCheckTimer % 30 != 0)
+            return;
+        
+        // Check if all NPCs have arrived (controller is null when pathfinding is complete)
+        bool allArrived = true;
+        foreach (var npc in this.MovingNPCs)
+        {
+            if (npc?.controller != null)
+            {
+                allArrived = false;
+                break;
+            }
+        }
+        
+        // Timeout after 10 seconds (600 ticks) to prevent infinite waiting
+        if (this.NPCMoveCheckTimer > 600)
+        {
+            this.Monitor.Log("NPC movement timeout, starting fireworks anyway", LogLevel.Warn);
+            
+            // Force all NPCs to face up
+            foreach (var npc in this.MovingNPCs)
+            {
+                if (npc != null)
+                {
+                    npc.controller = null;
+                    npc.Halt();
+                    npc.faceDirection(0);
+                }
+            }
+            allArrived = true;
+        }
+        
+        // When all NPCs have arrived, start the fireworks
+        if (allArrived)
+        {
+            this.NPCsMoving = false;
+            this.MovingNPCs.Clear();
+            this.Monitor.Log("All NPCs arrived at viewing positions", LogLevel.Info);
+            
+            // Start fireworks after a brief delay
+            Game1.delayedActions.Add(new DelayedAction(500, () =>
+            {
+                this.StartFireworksShow();
+            }));
+        }
     }
 
     private void StartFireworksShow()
@@ -450,6 +548,9 @@ internal sealed class ModEntry : Mod
 
         // Update fireworks show if active
         this.UpdateFireworksShow();
+        
+        // Update NPC movement if active
+        this.UpdateNPCMovement();
 
         if (this.IsChanging)
             return;
@@ -499,6 +600,11 @@ internal sealed class ModEntry : Mod
             {
                 this.Monitor.Log($"Error changing outfit: {ex}", LogLevel.Error);
             }
+
+            // Move player down 2 tiles after changing
+            var player = Game1.player;
+            player.Position = new Vector2(player.Position.X, player.Position.Y + 128); // +128 = 2 tiles down
+            player.faceDirection(2); // Face down
 
             Game1.globalFadeToClear(() =>
             {
