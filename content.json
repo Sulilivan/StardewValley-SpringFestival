@@ -59,7 +59,7 @@
             "Action": "EditData",
             "Target": "Data/mail",
             "Entries": {
-                "spring_festival_notice": "亲爱的@：^^一年一度的春节即将在冬季28日到来！届时请来镇广场和大家一起庆祝吧。届时会有美食、精美的装饰，还有壮观的烟花表演！^^期待你的到来！^  ——路易斯镇长"
+                "spring_festival_notice": "亲爱的@：^^一年一度除夕即将在冬季28日到来！届时请来镇广场和大家一起庆祝吧。届时会有美食、精美的装饰，还有壮观的烟花表演！^^期待你的到来！^  ——路易斯镇长"
             },
             "When": {
                 "Language": "zh"
@@ -102,22 +102,42 @@
                     "SalableItemTags": null,
                     "Items": [
                         {
+                            "Id": "SpringFestival_TanghuluSkewer",
+                            "ItemId": "(O)459",
+                            "Price": 150,
+                            "AvailableStock": -1
+                        },
+                        {
                             "Id": "SpringFestival_Dumplings",
-                            "ItemId": "(O)194",
+                            "ItemId": "(O)220",
                             "Price": 200,
                             "AvailableStock": -1
                         },
                         {
                             "Id": "SpringFestival_LuckyRedEnvelope",
-                            "ItemId": "(O)373",
+                            "ItemId": "(O)74",
+                            "Price": 888,
+                            "AvailableStock": 3,
+                            "AvailableStockLimit": "Player"
+                        },
+                        {
+                            "Id": "SpringFestival_FestiveLantern",
+                            "ItemId": "(O)161",
                             "Price": 500,
                             "AvailableStock": 5
                         },
                         {
-                            "Id": "SpringFestival_FestiveLantern",
-                            "ItemId": "(O)746",
-                            "Price": 1000,
-                            "AvailableStock": 1
+                            "Id": "SpringFestival_LuckyCharm",
+                            "ItemId": "(O)446",
+                            "Price": 666,
+                            "AvailableStock": 1,
+                            "AvailableStockLimit": "Player"
+                        },
+                        {
+                            "Id": "SpringFestival_Firework",
+                            "ItemId": "(O)287",
+                            "Price": 300,
+                            "AvailableStock": 10
                         }
                     ]
                 }
@@ -135,7 +155,7 @@
                             "Dialogues": [
                                 {
                                     "Id": "Default",
-                                    "Dialogue": "欢迎来到春节市集！看看我们的节日商品吧！"
+                                    "Dialogue": "欢迎来到除夕市集！看看我们的节日商品吧！"
                                 }
                             ]
                         }
@@ -143,22 +163,42 @@
                     "SalableItemTags": null,
                     "Items": [
                         {
+                            "Id": "SpringFestival_TanghuluSkewer",
+                            "ItemId": "(O)459",
+                            "Price": 150,
+                            "AvailableStock": -1
+                        },
+                        {
                             "Id": "SpringFestival_Dumplings",
-                            "ItemId": "(O)194",
+                            "ItemId": "(O)220",
                             "Price": 200,
                             "AvailableStock": -1
                         },
                         {
                             "Id": "SpringFestival_LuckyRedEnvelope",
-                            "ItemId": "(O)373",
+                            "ItemId": "(O)74",
+                            "Price": 888,
+                            "AvailableStock": 3,
+                            "AvailableStockLimit": "Player"
+                        },
+                        {
+                            "Id": "SpringFestival_FestiveLantern",
+                            "ItemId": "(O)161",
                             "Price": 500,
                             "AvailableStock": 5
                         },
                         {
-                            "Id": "SpringFestival_FestiveLantern",
-                            "ItemId": "(O)746",
-                            "Price": 1000,
-                            "AvailableStock": 1
+                            "Id": "SpringFestival_LuckyCharm",
+                            "ItemId": "(O)446",
+                            "Price": 666,
+                            "AvailableStock": 1,
+                            "AvailableStockLimit": "Player"
+                        },
+                        {
+                            "Id": "SpringFestival_Firework",
+                            "ItemId": "(O)287",
+                            "Price": 300,
+                            "AvailableStock": 10
                         }
                     ]
                 }

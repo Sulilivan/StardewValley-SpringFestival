@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
@@ -22,6 +23,12 @@ internal sealed class ModEntry : Mod
     private Point LastPlayerTile;
     private bool HasTalkedToLewis;
     private bool FireworksTriggered;
+    
+    // Fireworks state
+    private bool FireworksShowActive;
+    private int FireworksTimer;
+    private int FireworksPhase;
+    private readonly Random FireworksRandom = new();
 
     // === FESTIVAL COORDINATES ===
     // Costume change point (single tile)
@@ -56,6 +63,9 @@ internal sealed class ModEntry : Mod
         this.IsChanging = false;
         this.CooldownTicks = 0;
         this.LastPlayerTile = Point.Zero;
+        this.FireworksShowActive = false;
+        this.FireworksTimer = 0;
+        this.FireworksPhase = 0;
         this.Monitor.Log("Spring Festival states reset.", LogLevel.Debug);
     }
 
@@ -165,7 +175,7 @@ internal sealed class ModEntry : Mod
         {
             this.HasTalkedToLewis = true;
             string msg = Game1.content.GetCurrentLanguage() == LocalizedContentManager.LanguageCode.zh
-                ? "欢迎来到春节庆典！新年快乐！^先去到处逛逛吧，和乡亲们聊聊天。^你还可以去彩色帐篷里换一身新衣服！^准备好之后再来找我，我们一起点燃烟花！"
+                ? "欢迎来到除夕庆典！新年快乐！^先去到处逛逛吧，和乡亲们聊聊天。^你还可以去彩色帐篷里换一身新衣服！^准备好之后再来找我，我们一起点燃烟花！"
                 : "Welcome to the Spring Festival! Happy New Year!^Feel free to explore and chat with everyone.^You can visit the colorful tent to change outfits!^Come back when you're ready to light the fireworks!";
             Game1.drawObjectDialogue(msg);
             this.Monitor.Log("First Lewis interaction - showed welcome message", LogLevel.Debug);
@@ -199,36 +209,141 @@ internal sealed class ModEntry : Mod
             return;
 
         this.FireworksTriggered = true;
-        this.TriggerMainEvent();
+        this.StartFireworksShow();
     }
 
-    private void TriggerMainEvent()
+    private void StartFireworksShow()
+    {
+        // Show Lewis's opening speech
+        string msg = Game1.content.GetCurrentLanguage() == LocalizedContentManager.LanguageCode.zh
+            ? "各位乡亲们，让我们一起迎接新年的到来！现在……点燃烟花！"
+            : "Everyone, let's welcome the new year together! Now... light the fireworks!";
+        
+        Game1.drawObjectDialogue(msg);
+        
+        // Start the fireworks show
+        this.FireworksShowActive = true;
+        this.FireworksTimer = 0;
+        this.FireworksPhase = 0;
+        
+        this.Monitor.Log("Fireworks show started!", LogLevel.Info);
+    }
+
+    private void UpdateFireworksShow()
+    {
+        if (!this.FireworksShowActive)
+            return;
+            
+        this.FireworksTimer++;
+        
+        var location = Game1.currentLocation;
+        if (location == null)
+            return;
+
+        // Launch fireworks at intervals
+        if (this.FireworksTimer % 30 == 0 && this.FireworksPhase < 20) // Every 0.5 seconds, 20 fireworks total
+        {
+            this.LaunchFirework(location);
+            this.FireworksPhase++;
+        }
+
+        // End the show after all fireworks
+        if (this.FireworksPhase >= 20 && this.FireworksTimer > 700) // About 12 seconds total
+        {
+            this.FireworksShowActive = false;
+            
+            // Show final message
+            string finalMsg = Game1.content.GetCurrentLanguage() == LocalizedContentManager.LanguageCode.zh
+                ? "新年快乐！祝大家在新的一年里万事如意、幸福安康！恭喜发财！"
+                : "Happy New Year! May the coming year bring prosperity and happiness to us all!";
+            Game1.drawObjectDialogue(finalMsg);
+            
+            this.Monitor.Log("Fireworks show ended!", LogLevel.Info);
+        }
+    }
+
+    private void LaunchFirework(GameLocation location)
     {
         try
         {
-            if (Game1.CurrentEvent != null && Game1.CurrentEvent.isFestival)
+            // Random position in the sky above the festival area
+            float baseX = (25 + this.FireworksRandom.Next(25)) * 64f; // X: tiles 25-50
+            float baseY = (45 + this.FireworksRandom.Next(15)) * 64f; // Y: tiles 45-60 (in the sky)
+            
+            // Play firework sound
+            Game1.playSound("firework");
+            
+            // Create the firework explosion effect using TemporaryAnimatedSprite
+            // Use the game's built-in animations texture
+            Color[] fireworkColors = {
+                Color.Red, Color.Gold, Color.Orange, Color.White, 
+                Color.Cyan, Color.Magenta, Color.Lime, Color.Yellow
+            };
+            Color color = fireworkColors[this.FireworksRandom.Next(fireworkColors.Length)];
+            
+            // Create multiple particles for the explosion effect
+            int particleCount = 8 + this.FireworksRandom.Next(8);
+            for (int i = 0; i < particleCount; i++)
             {
-                // Load festival data and trigger mainEvent
-                var festivalData = Game1.temporaryContent.Load<Dictionary<string, string>>("Data\\Festivals\\winter28");
-                if (festivalData.TryGetValue("mainEvent", out string? script) && !string.IsNullOrEmpty(script))
+                float angle = (float)(i * Math.PI * 2 / particleCount);
+                float speed = 2f + (float)this.FireworksRandom.NextDouble() * 3f;
+                float motionX = (float)Math.Cos(angle) * speed;
+                float motionY = (float)Math.Sin(angle) * speed;
+                
+                var particle = new TemporaryAnimatedSprite(
+                    textureName: "LooseSprites\\Cursors",
+                    sourceRect: new Rectangle(352, 1200, 16, 16), // Star/sparkle sprite
+                    animationInterval: 100f,
+                    animationLength: 6,
+                    numberOfLoops: 0,
+                    position: new Vector2(baseX, baseY),
+                    flicker: true,
+                    flipped: false,
+                    layerDepth: 1f,
+                    alphaFade: 0.02f,
+                    color: color,
+                    scale: 3f + (float)this.FireworksRandom.NextDouble() * 2f,
+                    scaleChange: -0.05f,
+                    rotation: 0f,
+                    rotationChange: 0f
+                )
                 {
-                    Game1.CurrentEvent.eventCommands = script.Split('/');
-                    Game1.CurrentEvent.currentCommand = 0;
-                    this.Monitor.Log("Triggered mainEvent successfully!", LogLevel.Info);
-                    return;
-                }
+                    motion = new Vector2(motionX, motionY),
+                    acceleration = new Vector2(0f, 0.1f) // Gravity
+                };
+                
+                location.temporarySprites.Add(particle);
             }
+            
+            // Add a central flash
+            var flash = new TemporaryAnimatedSprite(
+                textureName: "LooseSprites\\Cursors",
+                sourceRect: new Rectangle(368, 1200, 16, 16), // Bright flash sprite
+                animationInterval: 50f,
+                animationLength: 4,
+                numberOfLoops: 0,
+                position: new Vector2(baseX - 32, baseY - 32),
+                flicker: false,
+                flipped: false,
+                layerDepth: 1f,
+                alphaFade: 0.1f,
+                color: Color.White,
+                scale: 6f,
+                scaleChange: -0.3f,
+                rotation: 0f,
+                rotationChange: 0f
+            );
+            location.temporarySprites.Add(flash);
+            
+            // Screen flash effect
+            Game1.screenGlowOnce(color, false, 0.3f, 0.2f);
+            
+            this.Monitor.Log($"Launched firework at ({baseX/64}, {baseY/64})", LogLevel.Trace);
         }
         catch (Exception ex)
         {
-            this.Monitor.Log($"Error triggering mainEvent: {ex.Message}", LogLevel.Error);
+            this.Monitor.Log($"Error launching firework: {ex.Message}", LogLevel.Error);
         }
-
-        // Fallback message
-        string msg = Game1.content.GetCurrentLanguage() == LocalizedContentManager.LanguageCode.zh
-            ? "让我们一起迎接新年！新年快乐！"
-            : "Let's welcome the new year! Happy New Year!";
-        Game1.drawObjectDialogue(msg);
     }
 
     private void OpenFestivalShop()
@@ -253,6 +368,9 @@ internal sealed class ModEntry : Mod
     {
         if (!Context.IsWorldReady)
             return;
+
+        // Update fireworks show if active
+        this.UpdateFireworksShow();
 
         if (this.IsChanging)
             return;

@@ -2,7 +2,7 @@
     "Name": "Chinese Spring Festival",
     "Author": "SpringFestivalMod",
     "Version": "1.0.0",
-    "Description": "Adds a Chinese Spring Festival (春节) celebration on Winter 28, with fireworks, festive NPC dialogues, and cultural traditions.",
+    "Description": "Adds a Chinese Spring Festival (除夕) celebration on Winter 28, with fireworks, festive NPC dialogues, and cultural traditions.",
     "UniqueID": "SpringFestivalMod.ChineseSpringFestival",
     "MinimumApiVersion": "4.0.0",
     "ContentPackFor": {
