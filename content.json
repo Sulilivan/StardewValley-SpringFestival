@@ -149,7 +149,7 @@
                 "{{ModId}}_RedEnvelope": {
                     "Name": "RedEnvelope",
                     "DisplayName": "红包",
-                    "Description": "一个装满惊喜的红包！打开后会获得礼物。",
+                    "Description": "一个装满惊喜的红包！里面有你想要的！",
                     "Type": "Basic",
                     "Category": 0,
                     "Price": 888,
@@ -240,7 +240,7 @@
             "Action": "EditData",
             "Target": "Data/mail",
             "Entries": {
-                "spring_festival_notice": "亲爱的@：^^一年一度除夕即将在冬季28日到来！届时请来镇广场和大家一起庆祝吧。届时会有美食、精美的装饰，还有壮观的烟花表演！^^期待你的到来！^  ——路易斯镇长"
+                "spring_festival_notice": "亲爱的@：^^一年一度的除夕即将在冬季28日到来！届时会有美食、精美的装饰，还有壮观的烟花表演。请来鹈鹕镇广场和老乡们一起庆祝吧！^^期待你的到来！^  ——刘易斯镇长"
             },
             "When": {
                 "Language": "zh"
@@ -317,6 +317,24 @@
                             "Price": 800,
                             "AvailableStock": 1,
                             "AvailableStockLimit": "Player"
+                        },
+                        {
+                            "Id": "SpringFestival_Firework_Red",
+                            "ItemId": "(O)893",
+                            "Price": 500,
+                            "AvailableStock": 5
+                        },
+                        {
+                            "Id": "SpringFestival_Firework_Purple",
+                            "ItemId": "(O)894",
+                            "Price": 500,
+                            "AvailableStock": 5
+                        },
+                        {
+                            "Id": "SpringFestival_Firework_Green",
+                            "ItemId": "(O)895",
+                            "Price": 500,
+                            "AvailableStock": 5
                         }
                     ]
                 }
@@ -378,6 +396,24 @@
                             "Price": 800,
                             "AvailableStock": 1,
                             "AvailableStockLimit": "Player"
+                        },
+                        {
+                            "Id": "SpringFestival_Firework_Red",
+                            "ItemId": "(O)893",
+                            "Price": 500,
+                            "AvailableStock": 5
+                        },
+                        {
+                            "Id": "SpringFestival_Firework_Purple",
+                            "ItemId": "(O)894",
+                            "Price": 500,
+                            "AvailableStock": 5
+                        },
+                        {
+                            "Id": "SpringFestival_Firework_Green",
+                            "ItemId": "(O)895",
+                            "Price": 500,
+                            "AvailableStock": 5
                         }
                     ]
                 }

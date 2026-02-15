@@ -194,7 +194,7 @@ internal sealed class ModEntry : Mod
         {
             this.HasTalkedToLewis = true;
             string msg = Game1.content.GetCurrentLanguage() == LocalizedContentManager.LanguageCode.zh
-                ? "欢迎来到除夕庆典！新年快乐！^先去到处逛逛吧，和乡亲们聊聊天。^你还可以去彩色帐篷里换一身新衣服！^准备好之后再来找我，我们一起点燃烟花！"
+                ? "欢迎来到除夕烟花大会！新年快乐！^先去到处逛逛吧，和乡亲们聊聊天。^你还可以去彩色帐篷里换一身新衣服！^准备好之后再来找我，我们一起点燃烟花！"
                 : "Welcome to the Spring Festival! Happy New Year!^Feel free to explore and chat with everyone.^You can visit the colorful tent to change outfits!^Come back when you're ready to light the fireworks!";
             Game1.afterDialogues = () => { this.IsDialogueActive = false; };
             Game1.drawObjectDialogue(msg);
@@ -421,7 +421,7 @@ internal sealed class ModEntry : Mod
             
             // Show final message
             string finalMsg = Game1.content.GetCurrentLanguage() == LocalizedContentManager.LanguageCode.zh
-                ? "新年快乐！祝大家在新的一年里万事如意、幸福安康！恭喜发财！"
+                ? "新年快乐！祝老乡们在新的一年里万事如意、幸福安康！恭喜发财！"
                 : "Happy New Year! May the coming year bring prosperity and happiness to us all!";
             Game1.drawObjectDialogue(finalMsg);
             
@@ -450,26 +450,165 @@ internal sealed class ModEntry : Mod
             // Play firework sound
             Game1.playSound("firework");
             
-            // Create the firework explosion effect using TemporaryAnimatedSprite
-            // Use the game's built-in animations texture
-            Color[] fireworkColors = {
-                Color.Red, Color.Gold, Color.Orange, Color.White, 
-                Color.Cyan, Color.Magenta, Color.Lime, Color.Yellow
-            };
-            Color color = fireworkColors[this.FireworksRandom.Next(fireworkColors.Length)];
+            // Choose firework type randomly (Red, Gold, Purple only - no green)
+            int fireworkType = this.FireworksRandom.Next(4); // 0-3: different types
             
-            // Create multiple particles for the explosion effect
-            int particleCount = 8 + this.FireworksRandom.Next(8);
-            for (int i = 0; i < particleCount; i++)
+            switch (fireworkType)
             {
-                float angle = (float)(i * Math.PI * 2 / particleCount);
-                float speed = 2f + (float)this.FireworksRandom.NextDouble() * 3f;
+                case 0:
+                    this.LaunchHeartFirework(location, baseX, baseY); // Red heart
+                    break;
+                case 1:
+                    this.LaunchStarburstFirework(location, baseX, baseY, Color.Gold); // Gold starburst
+                    break;
+                case 2:
+                    this.LaunchSpiralFirework(location, baseX, baseY); // Purple spiral
+                    break;
+                default:
+                    this.LaunchClassicFirework(location, baseX, baseY); // Mixed colors (red/gold/purple)
+                    break;
+            }
+            
+            this.Monitor.Log($"Launched firework type {fireworkType} at ({baseX/64}, {baseY/64})", LogLevel.Trace);
+        }
+        catch (Exception ex)
+        {
+            this.Monitor.Log($"Error launching firework: {ex.Message}", LogLevel.Error);
+        }
+    }
+    
+    private void LaunchHeartFirework(GameLocation location, float baseX, float baseY)
+    {
+        // Heart shape using parametric equations
+        Color heartColor = Color.Red;
+        int particleCount = 30;
+        
+        for (int i = 0; i < particleCount; i++)
+        {
+            float t = (float)(i * Math.PI * 2 / particleCount);
+            // Heart parametric equation
+            float x = 16f * (float)Math.Pow(Math.Sin(t), 3);
+            float y = -(13f * (float)Math.Cos(t) - 5f * (float)Math.Cos(2*t) - 2f * (float)Math.Cos(3*t) - (float)Math.Cos(4*t));
+            
+            var particle = new TemporaryAnimatedSprite(
+                textureName: "LooseSprites\\Cursors",
+                sourceRect: new Rectangle(352, 1200, 16, 16),
+                animationInterval: 100f,
+                animationLength: 6,
+                numberOfLoops: 0,
+                position: new Vector2(baseX, baseY),
+                flicker: true,
+                flipped: false,
+                layerDepth: 1f,
+                alphaFade: 0.015f,
+                color: heartColor,
+                scale: 2.5f,
+                scaleChange: -0.02f,
+                rotation: 0f,
+                rotationChange: 0f
+            )
+            {
+                motion = new Vector2(x * 0.3f, y * 0.3f),
+                acceleration = new Vector2(0f, 0.05f)
+            };
+            
+            location.temporarySprites.Add(particle);
+        }
+        
+        Game1.screenGlowOnce(heartColor, false, 0.3f, 0.2f);
+    }
+    
+    private void LaunchJunimoFirework(GameLocation location, float baseX, float baseY)
+    {
+        // Junimo-colored firework (green with sparkles)
+        Color junimoColor = Color.Lime;
+        int particleCount = 16;
+        
+        // Create Junimo silhouette particles
+        for (int i = 0; i < particleCount; i++)
+        {
+            float angle = (float)(i * Math.PI * 2 / particleCount);
+            float speed = 2f + (float)this.FireworksRandom.NextDouble() * 2f;
+            float motionX = (float)Math.Cos(angle) * speed;
+            float motionY = (float)Math.Sin(angle) * speed;
+            
+            var particle = new TemporaryAnimatedSprite(
+                textureName: "LooseSprites\\Cursors",
+                sourceRect: new Rectangle(352, 1200, 16, 16),
+                animationInterval: 80f,
+                animationLength: 6,
+                numberOfLoops: 0,
+                position: new Vector2(baseX, baseY),
+                flicker: true,
+                flipped: false,
+                layerDepth: 1f,
+                alphaFade: 0.02f,
+                color: junimoColor,
+                scale: 3f + (float)this.FireworksRandom.NextDouble() * 2f,
+                scaleChange: -0.04f,
+                rotation: 0f,
+                rotationChange: (float)this.FireworksRandom.NextDouble() * 0.1f
+            )
+            {
+                motion = new Vector2(motionX, motionY),
+                acceleration = new Vector2(0f, 0.08f)
+            };
+            
+            location.temporarySprites.Add(particle);
+        }
+        
+        // Add extra green sparkles
+        for (int i = 0; i < 8; i++)
+        {
+            float angle = (float)this.FireworksRandom.NextDouble() * (float)Math.PI * 2;
+            float speed = 4f + (float)this.FireworksRandom.NextDouble() * 3f;
+            
+            var sparkle = new TemporaryAnimatedSprite(
+                textureName: "LooseSprites\\Cursors",
+                sourceRect: new Rectangle(368, 1200, 16, 16),
+                animationInterval: 60f,
+                animationLength: 4,
+                numberOfLoops: 0,
+                position: new Vector2(baseX, baseY),
+                flicker: false,
+                flipped: false,
+                layerDepth: 1f,
+                alphaFade: 0.05f,
+                color: Color.LightGreen,
+                scale: 2f,
+                scaleChange: -0.1f,
+                rotation: 0f,
+                rotationChange: 0f
+            )
+            {
+                motion = new Vector2((float)Math.Cos(angle) * speed, (float)Math.Sin(angle) * speed),
+                acceleration = new Vector2(0f, 0.1f)
+            };
+            
+            location.temporarySprites.Add(sparkle);
+        }
+        
+        Game1.screenGlowOnce(junimoColor, false, 0.3f, 0.2f);
+    }
+    
+    private void LaunchStarburstFirework(GameLocation location, float baseX, float baseY, Color color)
+    {
+        // Star burst pattern with multiple layers
+        int[] particlesPerLayer = { 8, 12, 16 };
+        float[] speeds = { 2f, 4f, 6f };
+        
+        for (int layer = 0; layer < 3; layer++)
+        {
+            for (int i = 0; i < particlesPerLayer[layer]; i++)
+            {
+                float angle = (float)(i * Math.PI * 2 / particlesPerLayer[layer]) + layer * 0.2f;
+                float speed = speeds[layer];
                 float motionX = (float)Math.Cos(angle) * speed;
                 float motionY = (float)Math.Sin(angle) * speed;
                 
                 var particle = new TemporaryAnimatedSprite(
                     textureName: "LooseSprites\\Cursors",
-                    sourceRect: new Rectangle(352, 1200, 16, 16), // Star/sparkle sprite
+                    sourceRect: new Rectangle(352, 1200, 16, 16),
                     animationInterval: 100f,
                     animationLength: 6,
                     numberOfLoops: 0,
@@ -477,50 +616,131 @@ internal sealed class ModEntry : Mod
                     flicker: true,
                     flipped: false,
                     layerDepth: 1f,
-                    alphaFade: 0.02f,
+                    alphaFade: 0.018f,
                     color: color,
-                    scale: 3f + (float)this.FireworksRandom.NextDouble() * 2f,
-                    scaleChange: -0.05f,
+                    scale: 3f - layer * 0.5f,
+                    scaleChange: -0.03f,
                     rotation: 0f,
                     rotationChange: 0f
                 )
                 {
                     motion = new Vector2(motionX, motionY),
-                    acceleration = new Vector2(0f, 0.1f) // Gravity
+                    acceleration = new Vector2(0f, 0.08f)
                 };
                 
                 location.temporarySprites.Add(particle);
             }
+        }
+        
+        Game1.screenGlowOnce(color, false, 0.3f, 0.2f);
+    }
+    
+    private void LaunchSpiralFirework(GameLocation location, float baseX, float baseY)
+    {
+        // Spiral pattern
+        Color[] spiralColors = { Color.Purple, Color.Magenta, Color.Cyan };
+        Color color = spiralColors[this.FireworksRandom.Next(spiralColors.Length)];
+        
+        for (int i = 0; i < 24; i++)
+        {
+            float angle = (float)(i * Math.PI * 2 / 8);
+            float radius = i * 0.3f;
+            float speed = 2f + radius * 0.5f;
+            float motionX = (float)Math.Cos(angle) * speed;
+            float motionY = (float)Math.Sin(angle) * speed;
             
-            // Add a central flash
-            var flash = new TemporaryAnimatedSprite(
+            var particle = new TemporaryAnimatedSprite(
                 textureName: "LooseSprites\\Cursors",
-                sourceRect: new Rectangle(368, 1200, 16, 16), // Bright flash sprite
-                animationInterval: 50f,
-                animationLength: 4,
+                sourceRect: new Rectangle(352, 1200, 16, 16),
+                animationInterval: 90f,
+                animationLength: 6,
                 numberOfLoops: 0,
-                position: new Vector2(baseX - 32, baseY - 32),
-                flicker: false,
+                position: new Vector2(baseX, baseY),
+                flicker: true,
                 flipped: false,
                 layerDepth: 1f,
-                alphaFade: 0.1f,
-                color: Color.White,
-                scale: 6f,
-                scaleChange: -0.3f,
+                alphaFade: 0.02f,
+                color: color,
+                scale: 2.5f,
+                scaleChange: -0.03f,
+                rotation: 0f,
+                rotationChange: 0.1f
+            )
+            {
+                motion = new Vector2(motionX, motionY),
+                acceleration = new Vector2(0f, 0.06f),
+                delayBeforeAnimationStart = i * 30
+            };
+            
+            location.temporarySprites.Add(particle);
+        }
+        
+        Game1.screenGlowOnce(color, false, 0.3f, 0.2f);
+    }
+    
+    private void LaunchClassicFirework(GameLocation location, float baseX, float baseY)
+    {
+        // Classic firework explosion (Red, Gold, Purple colors only)
+        Color[] fireworkColors = {
+            Color.Red, Color.Gold, Color.Orange, Color.White, 
+            Color.Purple, Color.Magenta, Color.Crimson, Color.Yellow
+        };
+        Color color = fireworkColors[this.FireworksRandom.Next(fireworkColors.Length)];
+        
+        int particleCount = 12 + this.FireworksRandom.Next(8);
+        for (int i = 0; i < particleCount; i++)
+        {
+            float angle = (float)(i * Math.PI * 2 / particleCount);
+            float speed = 2f + (float)this.FireworksRandom.NextDouble() * 3f;
+            float motionX = (float)Math.Cos(angle) * speed;
+            float motionY = (float)Math.Sin(angle) * speed;
+            
+            var particle = new TemporaryAnimatedSprite(
+                textureName: "LooseSprites\\Cursors",
+                sourceRect: new Rectangle(352, 1200, 16, 16),
+                animationInterval: 100f,
+                animationLength: 6,
+                numberOfLoops: 0,
+                position: new Vector2(baseX, baseY),
+                flicker: true,
+                flipped: false,
+                layerDepth: 1f,
+                alphaFade: 0.02f,
+                color: color,
+                scale: 3f + (float)this.FireworksRandom.NextDouble() * 2f,
+                scaleChange: -0.05f,
                 rotation: 0f,
                 rotationChange: 0f
-            );
-            location.temporarySprites.Add(flash);
+            )
+            {
+                motion = new Vector2(motionX, motionY),
+                acceleration = new Vector2(0f, 0.1f)
+            };
             
-            // Screen flash effect
-            Game1.screenGlowOnce(color, false, 0.3f, 0.2f);
-            
-            this.Monitor.Log($"Launched firework at ({baseX/64}, {baseY/64})", LogLevel.Trace);
+            location.temporarySprites.Add(particle);
         }
-        catch (Exception ex)
-        {
-            this.Monitor.Log($"Error launching firework: {ex.Message}", LogLevel.Error);
-        }
+        
+        // Add a central flash
+        var flash = new TemporaryAnimatedSprite(
+            textureName: "LooseSprites\\Cursors",
+            sourceRect: new Rectangle(368, 1200, 16, 16),
+            animationInterval: 50f,
+            animationLength: 4,
+            numberOfLoops: 0,
+            position: new Vector2(baseX - 32, baseY - 32),
+            flicker: false,
+            flipped: false,
+            layerDepth: 1f,
+            alphaFade: 0.1f,
+            color: Color.White,
+            scale: 6f,
+            scaleChange: -0.3f,
+            rotation: 0f,
+            rotationChange: 0f
+        );
+        location.temporarySprites.Add(flash);
+        
+        Game1.screenGlowOnce(color, false, 0.3f, 0.2f);
     }
 
     private void OpenFestivalShop()
@@ -601,10 +821,16 @@ internal sealed class ModEntry : Mod
                 this.Monitor.Log($"Error changing outfit: {ex}", LogLevel.Error);
             }
 
-            // Move player down 2 tiles after changing
+            // Move player down 2 tiles after changing (Y increases = down)
             var player = Game1.player;
-            player.Position = new Vector2(player.Position.X, player.Position.Y + 128); // +128 = 2 tiles down
+            float newY = player.Position.Y + 128f; // +128 pixels = 2 tiles down
+            player.setTileLocation(new Vector2(player.Tile.X, player.Tile.Y + 2));
             player.faceDirection(2); // Face down
+            
+            // Update LastPlayerTile to prevent immediate re-trigger
+            this.LastPlayerTile = new Point((int)player.Tile.X, (int)player.Tile.Y);
+            
+            this.Monitor.Log($"Moved player to tile ({player.Tile.X}, {player.Tile.Y})", LogLevel.Debug);
 
             Game1.globalFadeToClear(() =>
             {
