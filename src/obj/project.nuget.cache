@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "H5WkKkS3ig8CndCcwvis0GDRpcb8wIh7JmyOcJg64snJ8fCl7k1LbI7otZDCQRQ06KwQs4bZi4V1RMZH4S1tSA==",
+  "success": true,
+  "projectFilePath": "D:\\APP\\steamapps\\common\\Stardew Valley\\Mods\\StardewValley-SpringFestival\\src\\SpringFestivalHelper.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\SYR\\.nuget\\packages\\pathoschild.stardew.modbuildconfig\\4.1.1\\pathoschild.stardew.modbuildconfig.4.1.1.nupkg.sha512"
+  ],
+  "logs": []
+}

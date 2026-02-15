@@ -1,0 +1,16 @@
+{
+    "Name": "Spring Festival Helper",
+    "Author": "SpringFestivalMod",
+    "Version": "1.0.0",
+    "Description": "C# helper for Chinese Spring Festival mod - provides interactive costume change booth functionality.",
+    "UniqueID": "SpringFestivalMod.SpringFestivalHelper",
+    "EntryDll": "SpringFestivalHelper.dll",
+    "MinimumApiVersion": "4.0.0",
+    "Dependencies": [
+        {
+            "UniqueID": "SpringFestivalMod.ChineseSpringFestival",
+            "IsRequired": true
+        }
+    ],
+    "UpdateKeys": []
+}

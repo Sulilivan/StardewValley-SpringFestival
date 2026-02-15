@@ -80,6 +80,92 @@
                     "MarkActionApplied": false
                 }
             }
+        },
+
+        {
+            "Action": "EditData",
+            "Target": "Data/Shops",
+            "Entries": {
+                "SpringFestival_Shop": {
+                    "Owners": [
+                        {
+                            "Id": "AnyOrNone",
+                            "Name": "Any",
+                            "Dialogues": [
+                                {
+                                    "Id": "Default",
+                                    "Dialogue": "Welcome to the Spring Festival shop! Take a look at our festive goods!"
+                                }
+                            ]
+                        }
+                    ],
+                    "SalableItemTags": null,
+                    "Items": [
+                        {
+                            "Id": "SpringFestival_Dumplings",
+                            "ItemId": "(O)194",
+                            "Price": 200,
+                            "AvailableStock": -1
+                        },
+                        {
+                            "Id": "SpringFestival_LuckyRedEnvelope",
+                            "ItemId": "(O)373",
+                            "Price": 500,
+                            "AvailableStock": 5
+                        },
+                        {
+                            "Id": "SpringFestival_FestiveLantern",
+                            "ItemId": "(O)746",
+                            "Price": 1000,
+                            "AvailableStock": 1
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Shops",
+            "Entries": {
+                "SpringFestival_Shop": {
+                    "Owners": [
+                        {
+                            "Id": "AnyOrNone",
+                            "Name": "Any",
+                            "Dialogues": [
+                                {
+                                    "Id": "Default",
+                                    "Dialogue": "欢迎来到春节市集！看看我们的节日商品吧！"
+                                }
+                            ]
+                        }
+                    ],
+                    "SalableItemTags": null,
+                    "Items": [
+                        {
+                            "Id": "SpringFestival_Dumplings",
+                            "ItemId": "(O)194",
+                            "Price": 200,
+                            "AvailableStock": -1
+                        },
+                        {
+                            "Id": "SpringFestival_LuckyRedEnvelope",
+                            "ItemId": "(O)373",
+                            "Price": 500,
+                            "AvailableStock": 5
+                        },
+                        {
+                            "Id": "SpringFestival_FestiveLantern",
+                            "ItemId": "(O)746",
+                            "Price": 1000,
+                            "AvailableStock": 1
+                        }
+                    ]
+                }
+            },
+            "When": {
+                "Language": "zh"
+            }
         }
     ]
 }

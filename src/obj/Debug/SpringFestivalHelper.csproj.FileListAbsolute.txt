@@ -1,0 +1,10 @@
+D:\APP\steamapps\common\Stardew Valley\Mods\StardewValley-SpringFestival\src\obj\Debug\SpringFestivalHelper.csproj.AssemblyReference.cache
+D:\APP\steamapps\common\Stardew Valley\Mods\StardewValley-SpringFestival\src\obj\Debug\SpringFestivalHelper.GeneratedMSBuildEditorConfig.editorconfig
+D:\APP\steamapps\common\Stardew Valley\Mods\StardewValley-SpringFestival\src\obj\Debug\SpringFestivalHelper.AssemblyInfoInputs.cache
+D:\APP\steamapps\common\Stardew Valley\Mods\StardewValley-SpringFestival\src\obj\Debug\SpringFestivalHelper.AssemblyInfo.cs
+D:\APP\steamapps\common\Stardew Valley\Mods\StardewValley-SpringFestival\src\obj\Debug\SpringFestivalHelper.csproj.CoreCompileInputs.cache
+D:\APP\steamapps\common\Stardew Valley\Mods\StardewValley-SpringFestival\src\obj\Debug\SpringFestivalHelper.dll
+D:\APP\steamapps\common\Stardew Valley\Mods\StardewValley-SpringFestival\SpringFestivalHelper.deps.json
+D:\APP\steamapps\common\Stardew Valley\Mods\StardewValley-SpringFestival\SpringFestivalHelper.dll
+D:\APP\steamapps\common\Stardew Valley\Mods\SpringFestivalHelper\SpringFestivalHelper.deps.json
+D:\APP\steamapps\common\Stardew Valley\Mods\SpringFestivalHelper\SpringFestivalHelper.dll
