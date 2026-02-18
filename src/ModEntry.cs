@@ -51,6 +51,16 @@ internal sealed class ModEntry : Mod
     private const int PierreX = 25;
     private const int PierreY = 72;
 
+    /// <summary>
+    /// Check if currently in the Spring Festival (winter 28)
+    /// </summary>
+    private bool IsSpringFestival()
+    {
+        return Game1.isFestival() 
+            && Game1.currentSeason == "winter" 
+            && Game1.dayOfMonth == 28;
+    }
+
     public override void Entry(IModHelper helper)
     {
         // Use High priority to intercept before game handles it
@@ -83,8 +93,8 @@ internal sealed class ModEntry : Mod
 
     private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
     {
-        // Only handle in festivals
-        if (!Context.IsWorldReady || !Game1.isFestival())
+        // Only handle in Spring Festival (winter 28)
+        if (!Context.IsWorldReady || !this.IsSpringFestival())
             return;
 
         // Don't handle if dialogue is already active
@@ -781,7 +791,7 @@ internal sealed class ModEntry : Mod
             return;
         }
 
-        if (!Game1.isFestival())
+        if (!this.IsSpringFestival())
             return;
 
         // Get current player tile

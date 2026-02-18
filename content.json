@@ -269,6 +269,10 @@
             "Action": "Load",
             "Target": "Data/Festivals/winter28",
             "FromFile": "assets/data/winter28.json",
+            "When": {
+                "Season": "winter",
+                "Day": "28"
+            },
             "Priority": "High"
         },
         {
@@ -276,6 +280,8 @@
             "Target": "Data/Festivals/winter28",
             "FromFile": "assets/data/winter28_zh.json",
             "When": {
+                "Season": "winter",
+                "Day": "28",
                 "Language": "zh"
             },
             "Priority": "High"
@@ -319,8 +325,8 @@
                 "SpringFestival_Shop": {
                     "Owners": [
                         {
-                            "Id": "AnyOrNone",
-                            "Name": "Any",
+                            "Id": "Pierre",
+                            "Name": "Pierre",
                             "Dialogues": [
                                 {
                                     "Id": "Default",
@@ -395,6 +401,10 @@
                         }
                     ]
                 }
+            },
+            "When": {
+                "Season": "winter",
+                "Day": "28"
             }
         },
         {
@@ -404,8 +414,8 @@
                 "SpringFestival_Shop": {
                     "Owners": [
                         {
-                            "Id": "AnyOrNone",
-                            "Name": "Any",
+                            "Id": "Pierre",
+                            "Name": "Pierre",
                             "Dialogues": [
                                 {
                                     "Id": "Default",
@@ -482,7 +492,9 @@
                 }
             },
             "When": {
-                "Language": "zh"
+                "Language": "zh",
+                "Season": "winter",
+                "Day": "28"
             }
         }
     ]
