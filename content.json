@@ -13,6 +13,11 @@
         },
         {
             "Action": "Load",
+            "Target": "Mods/SpringFestival/Objects/Tangyuan",
+            "FromFile": "assets/objects/tangyuan.png"
+        },
+        {
+            "Action": "Load",
             "Target": "Mods/SpringFestival/Objects/RedEnvelope",
             "FromFile": "assets/objects/red_envelope.png"
         },
@@ -81,6 +86,29 @@
                     ],
                     "ContextTags": [ "color_white", "season_winter", "festival_item" ]
                 },
+                "{{ModId}}_Tangyuan": {
+                    "Name": "Tangyuan",
+                    "DisplayName": "Tangyuan",
+                    "Description": "Sweet glutinous rice balls symbolizing family unity and togetherness.",
+                    "Type": "Cooking",
+                    "Category": -7,
+                    "Price": 180,
+                    "Texture": "Mods/SpringFestival/Objects/Tangyuan",
+                    "SpriteIndex": 0,
+                    "Edibility": 50,
+                    "IsDrink": false,
+                    "Buffs": [
+                        {
+                            "Id": "{{ModId}}_Tangyuan_Buff",
+                            "Duration": 240,
+                            "BuffId": "{{ModId}}_Tangyuan_Buff",
+                            "CustomAttributes": {
+                                "Immunity": 1
+                            }
+                        }
+                    ],
+                    "ContextTags": [ "color_white", "season_winter", "festival_item" ]
+                },
                 "{{ModId}}_RedEnvelope": {
                     "Name": "RedEnvelope",
                     "DisplayName": "Red Envelope",
@@ -141,6 +169,29 @@
                             "BuffId": "{{ModId}}_Dumpling_Buff",
                             "CustomAttributes": {
                                 "Luck": 1
+                            }
+                        }
+                    ],
+                    "ContextTags": [ "color_white", "season_winter", "festival_item" ]
+                },
+                "{{ModId}}_Tangyuan": {
+                    "Name": "Tangyuan",
+                    "DisplayName": "汤圆",
+                    "Description": "甜蜜的糯米球，象征着团圆和睦。",
+                    "Type": "Cooking",
+                    "Category": -7,
+                    "Price": 180,
+                    "Texture": "Mods/SpringFestival/Objects/Tangyuan",
+                    "SpriteIndex": 0,
+                    "Edibility": 50,
+                    "IsDrink": false,
+                    "Buffs": [
+                        {
+                            "Id": "{{ModId}}_Tangyuan_Buff",
+                            "Duration": 240,
+                            "BuffId": "{{ModId}}_Tangyuan_Buff",
+                            "CustomAttributes": {
+                                "Immunity": 1
                             }
                         }
                     ],
@@ -293,6 +344,12 @@
                             "AvailableStock": -1
                         },
                         {
+                            "Id": "SpringFestival_Tangyuan",
+                            "ItemId": "(O){{ModId}}_Tangyuan",
+                            "Price": 180,
+                            "AvailableStock": -1
+                        },
+                        {
                             "Id": "SpringFestival_RedEnvelope",
                             "ItemId": "(O){{ModId}}_RedEnvelope",
                             "Price": 888,
@@ -369,6 +426,12 @@
                             "Id": "SpringFestival_Dumpling",
                             "ItemId": "(O){{ModId}}_Dumpling",
                             "Price": 200,
+                            "AvailableStock": -1
+                        },
+                        {
+                            "Id": "SpringFestival_Tangyuan",
+                            "ItemId": "(O){{ModId}}_Tangyuan",
+                            "Price": 180,
                             "AvailableStock": -1
                         },
                         {
