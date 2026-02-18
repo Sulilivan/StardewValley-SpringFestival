@@ -30,9 +30,9 @@
 ### 2. 创建发布压缩包
 
 **方法一：分开打包（推荐）**
-- 创建 `Chinese Spring Festival v1.0.0.zip`，包含两个文件夹：
+- 创建 `Chinese Spring Festival v1.0.1.zip`，包含两个文件夹：
   ```
-  Chinese Spring Festival v1.0.0.zip
+  Chinese Spring Festival v1.0.1.zip
   ├── StardewValley-SpringFestival/
   └── SpringFestivalHelper/
   ```
@@ -41,7 +41,7 @@
 1. 打开 `Mods` 文件夹
 2. 同时选中 `StardewValley-SpringFestival` 和 `SpringFestivalHelper` 两个文件夹
 3. 右键 → 发送到 → 压缩(zipped)文件夹
-4. 将压缩包重命名为 `Chinese Spring Festival v1.0.0.zip`
+4. 将压缩包重命名为 `Chinese Spring Festival v1.0.1.zip`
 
 ---
 
@@ -226,11 +226,11 @@ Stardew Valley/
 
 1. 点击 **Files** 标签
 2. 点击 **Add File**
-3. 上传你创建的 `Chinese Spring Festival v1.0.0.zip`
+3. 上传你创建的 `Chinese Spring Festival v1.0.1.zip`
 4. 填写版本信息：
-   - **File name**: `Chinese Spring Festival v1.0.0`
-   - **File version**: `1.0.0`
-   - **File description**: `Initial release with fireworks show, costume booth, and festival shop.`
+   - **File name**: `Chinese Spring Festival v1.0.1`
+   - **File version**: `1.0.1`
+   - **File description**: `Bug fix: Fixed When condition issues for festival dates and shop to prevent triggering during other festivals. Added proper date/season restrictions.`
 
 ### 第九步：发布前检查
 
