@@ -233,14 +233,14 @@
             "Action": "EditData",
             "Target": "Data/mail",
             "Entries": {
-                "spring_festival_notice": "Dear @,^^ The annual Spring Festival is coming up on the 28th of Winter! Please come celebrate with us in the town square. There will be food, decorations, and a spectacular fireworks display!^^Hope to see you there!^  -Mayor Lewis"
+                "spring_festival_notice": "Dear @,^^ The annual Spring Festival Eve is coming up on the 28th of Winter! The fireworks show starts at 6:00 PM! There will be food, decorations, and a spectacular fireworks display! Please come celebrate with us in the town square. ^^Hope to see you there!^  -Mayor Lewis"
             }
         },
         {
             "Action": "EditData",
             "Target": "Data/mail",
             "Entries": {
-                "spring_festival_notice": "亲爱的@：^^一年一度的除夕即将在冬季28日到来！届时会有美食、精美的装饰，还有壮观的烟花表演。请来鹈鹕镇广场和老乡们一起庆祝吧！^^期待你的到来！^  ——刘易斯镇长"
+                "spring_festival_notice": "亲爱的@：^^一年一度的除夕即将在冬季28日到来！烟花大会18：00开始！届时会有美食、精美的装饰，还有壮观的烟花表演。请来鹈鹕镇广场和老乡们一起庆祝吧！^^期待你的到来！^  ——刘易斯镇长"
             },
             "When": {
                 "Language": "zh"
