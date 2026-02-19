@@ -270,21 +270,16 @@
             "Target": "Data/Festivals/winter28",
             "FromFile": "assets/data/winter28.json",
             "When": {
-                "Season": "winter",
-                "Day": "28"
-            },
-            "Priority": "High"
+                "Language": "de, default, en, es, fr, hu, it, ja, ko, pt, ru, th, tr"
+            }
         },
         {
             "Action": "Load",
             "Target": "Data/Festivals/winter28",
             "FromFile": "assets/data/winter28_zh.json",
             "When": {
-                "Season": "winter",
-                "Day": "28",
                 "Language": "zh"
-            },
-            "Priority": "High"
+            }
         },
         {
             "Action": "EditData",
